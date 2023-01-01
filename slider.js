@@ -24,6 +24,7 @@ function slider({ container, slide, nextArrow, prevArrow, totalCounter, currentC
     let slideIndex = 1;
     let offset = 0;
 
+    // Добавление 0 перед количеством слайдов, если количество менее 10
     total.textContent = (slides.length < 10) ? `0${slides.length}` : slides.length;
     current.textContent = (slideIndex < 10) ? `0${slideIndex}` : slideIndex;
 
@@ -39,9 +40,10 @@ function slider({ container, slide, nextArrow, prevArrow, totalCounter, currentC
 
     slider.style.position = 'relative';
 
+    // Добавление индикатора текущего слайда
     const indicators = document.createElement('ol'),
         dots = [];
-    // indicators.classList.add(' ');
+        // indicators.classList.add(' '); - иногда нет доступа к стилям
     indicators.style.cssText = `
         position: absolute;
         right: 0;
@@ -59,7 +61,7 @@ function slider({ container, slide, nextArrow, prevArrow, totalCounter, currentC
     for (let i = 0; i < slides.length; i++) {
         const dot = document.createElement('li');
         dot.setAttribute('data-slide-to', i + 1);
-        // dot.classList.add(' ');
+        // dot.classList.add(' '); - иногда нет доступа к стилям
         dot.style.cssText = `
             box-sizing: content-box;
             flex: 0 1 auto;
@@ -91,6 +93,7 @@ function slider({ container, slide, nextArrow, prevArrow, totalCounter, currentC
         return parseFloat(str);
     }
 
+    // Пролистать вправо
     next.addEventListener('click', () => {
         if (offset == deleteNotDigits(width) * (slides.length - 1)) {
             offset = 0;
@@ -115,6 +118,7 @@ function slider({ container, slide, nextArrow, prevArrow, totalCounter, currentC
         dotOpacity();
     });
 
+    // Пролистать влево
     prev.addEventListener('click', () => {
         if (offset == 0) {
             offset = deleteNotDigits(width) * (slides.length - 1);
@@ -139,6 +143,7 @@ function slider({ container, slide, nextArrow, prevArrow, totalCounter, currentC
         dotOpacity();
     });
 
+    // Выбор слайда по индикатору
     dots.forEach(dot => {
         dot.addEventListener('click', e => {
             const slideTo = e.target.getAttribute('data-slide-to');
